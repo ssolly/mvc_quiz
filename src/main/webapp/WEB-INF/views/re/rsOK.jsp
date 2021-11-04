@@ -8,5 +8,7 @@
 </head>
 <body>
 	<h2> rsOK 페이지 </h2>
+	${result }<br>
+	id : ${test.id }
 </body>
 </html>
