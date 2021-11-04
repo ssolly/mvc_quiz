@@ -4,6 +4,8 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -36,4 +38,30 @@ public class HomeController {
 		return "home";
 	}
 	
+	@RequestMapping("index")
+	public String index() {
+		return "re/index";
+	}
+	
+	@RequestMapping("result")
+	public String result(HttpServletRequest request) {
+		String id = request.getParameter("id");
+		
+		//서비스에서 구현 후 단순 연결만 컨트롤러에서 하는게 좋음
+		if(id.equals("abc")) {
+			return "redirect:rsOK";	//jsp페이지라기보단 서버 위치 이동
+		} else {
+			return "redirect:rsNO";
+		}
+	}
+	
+	@RequestMapping("rsOK")
+	public String rsOK() {
+		return "re/rsOK";
+	}
+	
+	@RequestMapping("rsNO")
+	public String rsNO() {
+		return "re/rsNO";
+	}
 }
