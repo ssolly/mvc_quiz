@@ -11,8 +11,24 @@
 <body>
 
 <h2> Index page </h2>
-
-<a href="${contextPath }/member/join">회원가입</a> &ensp; &ensp;
+<c:choose>
+	<c:when test="${ reMap == null || reMap.usercheck.chk != 0}">
+		<script> ucheck(${reMap.usercheck.chk}) </script>
+		<form action="check" method="post">
+			<input type="text" name="id" placeholder="id"><br>
+			<input type="password" name="pwd" placeholder="password"><br>
+			<input type="submit" value="login">
+			<br>
+			<a href="${contextPath }/member/join">회원가입</a>
+		</form>
+	</c:when>
+	<c:otherwise>
+		<h3>
+			<img src="${contextPath }/resources/강아지.PNG" width="50px">
+			${reMap.usercheck.name} 님 환영합니다!!!
+		</h3>
+	</c:otherwise>
+</c:choose>
 <a href="${contextPath }/member/membership">모든 회원보기</a>
 </body>
 </html>

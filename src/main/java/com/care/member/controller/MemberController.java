@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.care.member.dto.MemberDTO;
 import com.care.member.service.MemberService;
@@ -22,6 +23,13 @@ public class MemberController {
 	
 	public MemberController() {
 		System.out.println("MemberController 실행");
+	}
+	
+	//Autowired한 ms의 값이 들어왔는지 확인
+	@RequestMapping("test")
+	public void test() {
+		System.out.println("ms : " + ms);
+		ms.test();
 	}
 	
 	@RequestMapping("index")
@@ -76,10 +84,18 @@ public class MemberController {
 		return "redirect:index";
 	}
 	
-	//Autowired한 ms의 값이 들어왔는지 확인
-	@RequestMapping("test")
-	public void test() {
-		System.out.println("ms : " + ms);
-		ms.test();
+	@RequestMapping("check")
+	public String check(Model model, RedirectAttributes re,
+				@RequestParam("id") String id, @RequestParam("pwd") String pwd) {
+		ms.check(id, pwd, model);
+		re.addFlashAttribute("reMap", model);
+		return "redirect:/member/index";
 	}
+
+	@RequestMapping("memberInfo")
+	public String memberInfo(@RequestParam String id, Model model) {
+		ms.memberInfo(id, model);
+		return "member/member_info";
+	}
+
 }

@@ -6,18 +6,19 @@ import org.springframework.ui.Model;
 
 import com.care.member.dao.MemberDAO;
 import com.care.member.dto.MemberDTO;
+import com.care.member.dto.UserCheckDTO;
 
 @Service
 public class MemberServiceImpl implements MemberService {
-	
+
 	@Autowired
 	MemberDAO dao;
-	
+
 	public MemberServiceImpl() {
 		System.out.println("service 생성자 실행");
 	}
-	
-	//dao에 Autowired를 통해서 값이 들어왔는지 체크
+
+	// dao에 Autowired를 통해서 값이 들어왔는지 체크
 	public void test() {
 		System.out.println("dao : " + dao);
 	}
@@ -33,8 +34,15 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void memberList(Model model) {
-		model.addAttribute("list",dao.memberList());
+		model.addAttribute("list", dao.memberList());
 	}
-	
-	
+
+	public void check(String id, String pwd, Model model) {
+		UserCheckDTO dto = dao.check(id, pwd);
+		model.addAttribute("usercheck", dto);
+	}
+
+	public void memberInfo(String id, Model model) {
+		model.addAttribute("member", dao.memberInfo(id));
+	}
 }
